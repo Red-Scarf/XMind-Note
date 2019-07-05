@@ -1,0 +1,31 @@
+Apache24
+启动、关闭
+httpd.exe -k start -n "Apache24"
+httpd.exe -k stop -n "Apache24"
+重启、卸载
+httpd.exe -k restart -n "Apache24"
+httpd.exe -k uninstall -n "Apache24"
+
+
+mysql8
+开启、关闭
+net start mysql
+net stop mysql
+登录
+mysql -uroot -p
+查看服务注册
+sc query mysql
+删除服务
+sc delete mysql
+
+
+git
+git add .
+git add dzy/dzy.php
+git commit -m "aaa"
+git push mycollection master
+git status
+git pull master
+git config --global user.name "dzy"
+git config --global user.email "70@qq.com"
+git remote add name url
