@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Class与Style绑定</title>
+</head>
+
+<body>
+    <div id="vm-1" class="static" v-bind:class="{ active: isActive, 'text-danger': hasError }">
+    	sjydausiydk
+    </div>
+    <div id="vm-2" class="static" v-bind:class="classObject">
+    	sjydausiydk
+    </div>
+    <div id="vm-3" class="static" v-bind:class="classObject">
+    	sjydausiydk
+    </div>
+
+    <!-- 数组语法 -->
+    <div class="static" v-bind:class="[activeClass, errorClass]">
+    	担惊受恐莱佛都开始金坷垃
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+	var vm1 = new Vue({
+		el: "#vm-1",
+		data: {
+			isActive: true,
+			hasError: false
+		}
+	});
+	var vm2 = new Vue({
+		el: "#vm-2",
+		data: {
+			classObject: {
+				active: true,
+				'text-danger': true
+			}
+		}
+	});
+	// 返回一个计算属性
+	var vm3 = new Vue({
+		el: "#vm-3",
+		data: {
+			isActive: true,
+			error: null
+		},
+		computed: {
+			classObject: function () {
+				return {
+					active: this.isActive && !this.error,
+					'text-danger': this.error && this.error.type === 'fatal'
+				};
+			}
+		}
+	});
+
+	// 数组语法
+	var vm4 = new Vue({
+		el: '.static',
+		data: {
+			activeClass: 'active',
+			errorClass: 'text-danger'
+		}
+	});
+</script>
+
+</html>
