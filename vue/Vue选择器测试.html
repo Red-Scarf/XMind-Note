@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue选择器测试</title>
+</head>
+<body>
+	<div class="aaa bbb" ref="this">
+		162736817263<br>
+		{{message}}
+	</div>
+	<div class="aaa ccc" ref="this">
+		djsakdjlksa<br>
+		{{message}}
+	</div>
+	<div class="aaa ddd" ref="this">
+		uqiowueiowq<br>
+		{{message}}
+	</div>
+</body>
+<script src="vue.js"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el: '.aaa',
+		data: {
+			message: '12321312'
+		}
+	});
+</script>
+</html>

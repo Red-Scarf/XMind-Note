@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue组件测试</title>
+</head>
+<body>
+	<div id="vm-1">
+		<button-counter class="aaa"></button-counter>
+	</div>
+	<div id="vm-2">
+		{{me}}
+	</div>
+</body>
+<script src="vue.js"></script>
+<script src="jquery-3.4.1.js"></script>
+<script type="text/javascript">
+	// 用在组件上
+	Vue.component('button-counter', {
+		template: '<p class="foo bar">Hi</p>'
+	});
+	var vm1 = new Vue({
+		el: '#vm-1'
+	});
+	var vm2 = new Vue({
+		el: '#vm-2',
+		data: {
+			me: 'asdsadsa'
+		}
+	});
+</script>
+</html>

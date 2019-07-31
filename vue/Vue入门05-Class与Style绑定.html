@@ -18,12 +18,46 @@
     </div>
 
     <!-- 数组语法 -->
-    <div class="static" v-bind:class="[activeClass, errorClass]">
+    <div class="static-1" v-bind:class="[activeClass, errorClass, thisClass]">
     	担惊受恐莱佛都开始金坷垃
     </div>
+    <div id="vm-4" v-bind:class="[{active: isActive}, errorClass, thisClass]">
+    	担惊受恐莱佛都开始金坷垃
+    </div>
+
+    <!-- 用在组件上 -->
+    <div id="vm-5">
+    	<my-component></my-component>
+    </div>
+
+    <!-- 对象语法 -->
+    <div id="vm-6" v-bind:style="styleObject">
+    	kjsdhajksh
+    </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="vue.js"></script>
 <script type="text/javascript">
+	// 对象语法
+	var vm6 = new Vue({
+		el: '#vm-6',
+		data: {
+			styleObject: {
+				color: 'red',
+				fontSize: '30px'
+			}
+		}
+	});
+
+	// 用在组件上
+	Vue.component('my-component', {
+		data: function () {
+			template: '<p class="foo bar">Hi</p>'
+		}
+	});
+	var vm5 = new Vue({
+		el: '#vm-5'
+	});
+
 	var vm1 = new Vue({
 		el: "#vm-1",
 		data: {
@@ -58,11 +92,21 @@
 	});
 
 	// 数组语法
-	var vm4 = new Vue({
-		el: '.static',
+	var static1 = new Vue({
+		el: '.static-1',
 		data: {
 			activeClass: 'active',
-			errorClass: 'text-danger'
+			errorClass: 'text-danger',
+			thisClass: 'this-in'
+		}
+	});
+	var vm4 = new Vue({
+		el: '#vm-4',
+		data: {
+			isActive: true,
+			activeClass: 'active',
+			errorClass: 'text-danger',
+			thisClass: 'this-in'
 		}
 	});
 </script>
