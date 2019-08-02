@@ -34,3 +34,14 @@ git reset –hard HEAD~1
 git add . 
 git commit ‘roll-back’ 
 git push -f origin master
+# 删除Git服务器文件
+## 方法一
+git rm -r --cached vue/vue.js #--cached不会把本地文件删除
+git commit -m 'delete file'
+git push -u xmindnote master
+## 方法二
+## 直接修改.gitignore文件,将不需要的文件过滤掉，然后执行命令
+git rm -r --cached .
+git add .
+git commit
+git push  -u origin master
