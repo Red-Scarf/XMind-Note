@@ -29,3 +29,8 @@ git pull master
 git config --global user.name "dzy"
 git config --global user.email "70@qq.com"
 git remote add name url
+# 回滚到上一个版本
+git reset –hard HEAD~1 
+git add . 
+git commit ‘roll-back’ 
+git push -f origin master
