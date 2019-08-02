@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>条件渲染</title>
+</head>
+<body>
+	<!-- if -->
+	<div id="vm-1">
+		<h1 v-if="awesome">Hello World!</h1>
+		<h1 v-else>Fuck World!</h1>
+		<h1 v-show="ok">Hello!</h1>
+	</div>
+
+	<!-- 复用 -->
+	<div id="vm-2">
+		<template v-if="loginType === 'username'">
+			<label>UserName</label>
+			<input placeholder="Enter Your UserName">
+		</template>
+		<template v-else>
+			<label>Email</label>
+			<input placeholder="Enter Your Email">
+		</template>
+		<button v-on:click="change">change login type</button>
+	</div>
+</body>
+<script src="vue.js"></script>
+<script type="text/javascript">
+	// 元素复用
+	var vm2 = new Vue({
+		el: '#vm-2',
+		data: {
+			loginType: 'username',
+			flage: true
+		},
+		methods: {
+			change: function () {
+				this.flage = !this.flage;
+				this.loginType = this.flage ? 'username' : 'email';
+			}
+		}
+	});
+
+	// if
+	var vm1 = new Vue({
+		el: '#vm-1',
+		data: {
+			awesome: true,
+			ok: true
+		}
+	});
+</script>
+</html>

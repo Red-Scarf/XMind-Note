@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>列表渲染</title>
+</head>
+<body>
+	<div id="vm-1">
+		<!-- 数组 -->
+		<ul>
+			<li v-for="item in items1">
+				{{item.message}}
+			</li>
+		</ul>
+		<!-- 下标 -->
+		<ul>
+			<li v-for="(item, index) in items2">
+				{{parentMessage}} - {{index}} - {{item.message}}
+			</li>
+		</ul>
+		<!-- 对象 -->
+		<ul>
+			<li v-for="value in object1">
+				{{value}}
+			</li>
+		</ul>
+		<!-- 对象键值对 -->
+		<ul>
+			<li v-for="(value, key) in object2">
+				{{key}}: {{value}}
+			</li>
+		</ul>
+		<!-- 键值对和下标 -->
+		<ul>
+			<li v-for="(value, key, index) in object3">
+				{{index}}.{{key}}: {{value}}
+			</li>
+		</ul>
+		<!-- 绑定key -->
+		<ul>
+			<li v-for="item in items3" v-bind:key="item.id">
+				{{item.message}}
+			</li>
+		</ul>
+	</div>
+</body>
+<script src="vue.js"></script>
+<script type="text/javascript">
+	var vm1 = new Vue({
+		el: '#vm-1',
+		data: {
+			parentMessage: 'parent',
+			items1: [
+				{message: 'Foo'},
+				{message: 'Bar'}
+			],
+			items2: [
+				{message: 'Apple'},
+				{message: 'Banana'}
+			],
+			object1: {
+				title: 'This Is Title',
+				author: 'Mike',
+				publishedAt: '2019-01-22'
+			},
+			object2: {
+				title: 'How To Learn JAVA',
+				author: 'Red Scard',
+				publishedAt: '2019-07-30'
+			},
+			object3: {
+				title: 'hdkjas',
+				author: 'fyuoiqwne',
+				publishedAt: '2019-04-01'
+			},
+			items3: [
+				{message: 'Orange'},
+				{message: 'Penelope'}
+			]
+		}
+	});
+</script>
+</html>
