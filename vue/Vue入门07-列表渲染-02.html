@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Vue列表渲染02</title>
+</head>
+<body>
+	<div id="vm-1">
+		<!-- 动态添加对象的属性 -->
+		<button v-on:click="addEle">添加一个对象</button>
+		<ul>
+			<li v-for="(value, key) in userProfile">
+				{{key}}: {{value}}
+			</li>
+		</ul>
+
+		<!-- 过滤后的结果 -->
+		<button v-on:click="addNum">添加一个随机数</button>
+		<ul>
+			<li v-for="n in evenNums">{{n}}</li>
+		</ul>
+
+		<!-- 无法使用计算属性时 -->
+		<ul>
+			<li v-for="n in even(numbers)">{{n}}</li>
+		</ul>
+	</div>
+</body>
+<script src="vue.js"></script>
+<script src="utils.js"></script>
+<script type="text/javascript">
+	var vm1 = new Vue({
+		el: '#vm-1',
+		data: {
+			userProfile: {
+				name: 'Mike'
+			},
+			numbers: [1, 2, 3, 4, 5]
+		},
+		computed: {
+			evenNums: function () {
+				return this.numbers.filter(function (number) {
+					return number%2 === 0;
+				});
+			}
+		},
+		methods: {
+			addEle: function () {
+				// 添加单个对象属性
+				// Vue.set(vm1.userProfile, randStr(5), randStr(10));
+				this.$set(vm1.userProfile, randStr(5), randStr(10));
+
+				// 添加多个对象属性
+				this.userProfile = Object.assign({}, vm1.userProfile, {
+					age: 27,
+					favoriteColor: 'green'
+				});
+			},
+			addNum: function () {
+				// 添加一个数
+				var a = randNum();
+				console.log("a:", a);
+				this.numbers.push(a);
+				console.log("numbers:", this.numbers);
+			},
+			even: function (numbers) {
+				return numbers.filter(function (number) {
+					return number % 2 === 1;
+				})
+			}
+		}
+	});
+</script>
+</html>

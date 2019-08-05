@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue列表渲染03</title>
+</head>
+<body>
+	<!-- 组件上使用for -->
+	<div id="vm-1">
+		<my-component
+			v-for="(index, item) in items"
+			v-bind:item="item"
+			v-bind:index="index"
+			v-bind:key="item.id"
+		></my-component>
+	</div>
+</body>
+<script src="vue.js"></script>
+<script src="utils.js"></script>
+<script type="text/javascript">
+	Vue.component('my-component', {
+		template: '<li>{{index}}: {{item}}</li>'
+	});
+	var vm1 = new Vue({
+		el: '#vm-1',
+		data: {
+			items: [31, 3213, 453, 543, 8979, 674, 364]
+		}
+	});
+</script>
+</html>
