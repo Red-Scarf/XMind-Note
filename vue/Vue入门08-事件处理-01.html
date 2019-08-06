@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>事件处理01</title>
+</head>
+<body>
+	<div id="vm-1">
+		<button v-on:click="counter += 1">Add 1</button>
+		<p>The button above has been clicked {{ counter }} times.</p>
+		<br>
+		<button v-on:click="greet">Greet</button>
+		<br>
+		<br>
+		<button v-on:click="say('Fuck')">Say Hi</button>
+		<button v-on:click="say('Hi')">Say Fuck</button>
+		<br>
+		<br>
+		<button v-on:click="warn('ydjsahd', $event)">Submit</button>
+		<br>
+		<br>
+		<!-- 按键事件 -->
+		<div id="vm-2">
+			<input v-on:keyup.enter="sub">
+			<input v-on:keyup.page-down="onPageDown">
+		</div>
+	</div>
+</body>
+<script src="vue.js"></script>
+<script src="utils.js"></script>
+<script type="text/javascript">
+	var vm1 = new Vue({
+		el: '#vm-1',
+		data: {
+			counter: 0,
+			name: 'Vue.js'
+		},
+		methods: {
+			greet: function (event) {
+				alert('Hello ' + this.name + '!');
+				// event是原生DOM事件
+				if (event) {
+					alert(event.target.tagName);
+				}
+			},
+			say: function (message) {
+				alert(message);
+			},
+			warn: function (message, event) {
+				if (event) {
+					event.preventDefault();
+					alert(message);
+				}
+			}
+		}
+	});
+
+	var vm2 = new Vue({
+		el: '#vm-2',
+		methods: {
+			sub: function () {
+				console.log("onEnter");
+				alert("onEnter");
+			},
+			onPageDown: function () {
+				console.log("onPageDown");
+				alert("onPageDown");
+			}
+		}
+	});
+</script>
+</html>

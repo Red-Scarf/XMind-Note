@@ -7,17 +7,80 @@
 	<!-- 组件上使用for -->
 	<div id="vm-1">
 		<my-component
-			v-for="(index, item) in items"
+			v-for="(item, index) in items"
 			v-bind:item="item"
 			v-bind:index="index"
 			v-bind:key="item.id"
 		></my-component>
 	</div>
+
+	<!--  todo 列表的完整例子 -->
+	<div id="todo-list-example">
+		<form v-on:submit.prevent="addNewTodo">
+			<label for="new-todo">Add a todo</label>
+			<input
+				v-model="newTodoText"
+				id="new-todo"
+				placeholder="E.g. Feed the cat"
+			>
+			<button>Add</button>
+		</form>
+		<ul>
+			<li
+				is="todo-item"
+				v-for="(todo, index) in todos"
+				v-bind:key="todo.id"
+				v-bind:title="todo.title"
+				v-on:remove="todos.splice(index, 1)"
+			></li>
+		</ul>
+	</div>
 </body>
 <script src="vue.js"></script>
 <script src="utils.js"></script>
 <script type="text/javascript">
+	Vue.component('todo-item', {
+		template: '\
+			<li>\
+				{{title}}\
+				<button v-on:click="$emit(\'remove\')">Remove</button>\
+			</li>\
+		',
+		props: ['title']
+	});
+	var example = new Vue({
+		el: '#todo-list-example',
+		data: {
+			newTodoText: '',
+			todos: [
+				{
+					id: 1,
+					title: 'Do the dishes'
+				},
+				{
+					id: 2,
+					title: 'Take out the trash'
+				},
+				{
+					id: 3,
+					title: 'Mow the lawn'
+				}
+			],
+			nextTodoId: 4
+		},
+		methods: {
+			addNewTodo: function () {
+				this.todos.push({
+					id: this.nextTodoId++,
+					title: this.newTodoText
+				});
+				this.newTodoText = '';
+			}
+		}
+	});
+
 	Vue.component('my-component', {
+		props: ['item', 'index'],
 		template: '<li>{{index}}: {{item}}</li>'
 	});
 	var vm1 = new Vue({
