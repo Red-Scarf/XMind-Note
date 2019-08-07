@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>表单输入绑定</title>
+</head>
+<body>
+	<!-- 修饰符 -->
+	<div id="vm-1">
+		<!-- .lazy -->
+		<input v-model.lazy="lazyMsg"><br>
+		<span>lazyMsg: {{lazyMsg}}</span>
+		<br>
+		<br>
+		<!-- .number -->
+		<input v-model.number="age" type="number"><br>
+		<span>age: {{age}}</span>
+		<br>
+		<br>
+		<!-- .trim -->
+		<input v-model.trim="msg"><br>
+		<span>msg: {{msg}}</span>
+	</div>
+</body>
+<script src="vue.js"></script>
+<script src="utils.js"></script>
+<script type="text/javascript">
+	var vm1 = new Vue({
+		el: '#vm-1',
+		data: {
+			lazyMsg: '',
+			age: '',
+			msg: '',
+		}
+	});
+</script>
+</html>

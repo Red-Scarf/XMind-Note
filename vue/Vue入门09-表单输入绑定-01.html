@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>表单输入绑定</title>
+</head>
+<body>
+	<!-- 基础 -->
+	<div id="vm-1">
+		<!-- 单行文本 -->
+		<input type="text" name="message" placeholder="enter words" v-model="message">
+		<p>Message: {{message}}</p>
+		<br>
+		<!-- 多行文本 -->
+		<textarea v-model="text" placeholder="enter text"></textarea>
+		<br>
+		<span>Text: </span>
+		<p style="white-space: pre-line;">{{text}}</p>
+		<!-- 单个复选框 -->
+		<input type="checkbox" name="check" v-model="checked">
+		<label for="check">{{checked}}</label>
+		<br>
+		<br>
+		<!-- 多个复选框 -->
+		<input type="checkbox" name="jack" value="Jack" v-model="checkedNames">
+		<label for="jack">Jack</label>
+		<input type="checkbox" name="john" value="John" v-model="checkedNames">
+		<label for="john">John</label>
+		<input type="checkbox" name="mike" value="Mike" v-model="checkedNames">
+		<label for="mike">Mike</label>
+		<br>
+		<span>Checked names: {{checkedNames}}</span>
+		<br>
+		<br>
+		<!-- 单选按钮 -->
+		<input type="radio" name="one" value="One" v-model="picked">
+		<label for="one">One</label>
+		<input type="radio" name="two" value="Two" v-model="picked">
+		<label for="two">Two</label>
+		<br>
+		<span>Picked: {{picked}}</span>
+		<br>
+		<br>
+		<!-- 下拉框单选 -->
+		<select v-model="selectedSingle">
+			<option disabled value="">请选择</option>
+			<option>A</option>
+			<option>B</option>
+			<option>C</option>
+		</select>
+		<span>Selected: {{selectedSingle}}</span>
+		<br>
+		<br>
+		<!-- 多选时 -->
+		<select v-model="selectNums" multiple style="width: 50px;">
+			<option>A</option>
+			<option>B</option>
+			<option>C</option>
+		</select>
+		<span>Selected: {{selectNums}}</span>
+		<br>
+		<br>
+		<!-- 用 v-for 渲染的动态选项 -->
+		<select v-model="selectFor">
+			<option v-for="option in options" v-bind:value="option.value">
+				{{option.text}}
+			</option>
+		</select>
+		<span>Selected: {{selectFor}}</span>
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+
+	<!-- 值绑定 -->
+	<p>值绑定</p>
+	<div id="vm-2">
+		<!-- 复选框 -->
+		<input type="checkbox" name="toggle" v-model="toggle" true-value="yes" false-value="no">
+		<span>toggle： {{toggle}}</span>
+		<br>
+		<br>
+		<!-- 单选按钮 -->
+		<input type="radio" name="pick" v-model="pick" v-bind:value="a">
+		<span>a:{{a}}</span>
+		<input type="radio" name="pick" v-model="pick" v-bind:value="b">
+		<span>b:{{b}}</span>
+		<br>
+		<span>pick: {{pick}}</span>
+		<br>
+		<br>
+		<!-- 下拉框 -->
+		<select v-model="selected">
+			<!-- 内联对象字面量 -->
+			<option v-bind:value="{number:123}">{number:123}</option>
+			<option v-bind:value="{number:456}">{number:456}</option>
+		</select>
+		<br>
+		<span>selected: {{selected}}</span><br>
+		<span>selected.number: {{selected.number}}</span>
+	</div>
+</body>
+<script src="vue.js"></script>
+<script src="utils.js"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el: '#vm-1',
+		data: {
+			message: '',
+			text: '',
+			checked: false,
+			checkedNames: [],
+			picked: '',
+			selectedSingle: '',
+			selectNums: [],
+			selectFor: 'A',
+			options: [
+				{text: 'One', value: 'A'},
+				{text: 'Two', value: 'B'},
+				{text: 'Three', value: 'C'}
+			]
+		}
+	});
+	var vm2 = new Vue({
+		el: '#vm-2',
+		data: {
+			toggle: 'no',
+			pick: '',
+			a: 'asd',
+			b: 'hjk',
+			selected: {}
+		}
+	});
+</script>
+</html>
