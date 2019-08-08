@@ -45,3 +45,7 @@ git rm -r --cached .
 git add .
 git commit
 git push  -u origin master
+
+git 仓库别名
+mycollection
+xmindnote
