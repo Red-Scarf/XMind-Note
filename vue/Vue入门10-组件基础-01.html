@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>组件基础</title>
+</head>
+<body>
+	<div id="component-1">
+		<!-- 组件定义 -->
+		<button-counter></button-counter>
+		<br>
+		<br>
+		<!-- props传递数据 -->
+		<!-- <blog-post title="My journey with Vue"></blog-post>
+		<blog-post title="Blogging with Vue"></blog-post>
+		<blog-post title="Why Vue is so fun"></blog-post> -->
+		<blog-post v-for="post in posts" v-bind:key="post.id" v-bind:title="post.title"></blog-post>
+		<br>
+		<br>
+		<!-- 单个根元素 -->
+		<!-- <blog-posts v-for="post in posts" v-bind:key="post.id" v-bind:post="post"></blog-posts> -->
+		<br>
+		<br>
+		<!-- 监听子组件事件 -->
+		<h3>监听子组件事件</h3>
+		<div :style="{ fontSize: postFontSize + 'em' }">
+			<blog-posts 
+				v-for="post in posts" 
+				v-bind:key="post.id" 
+				v-bind:post="post" 
+				v-on:add-fontSize="postFontSize += $event" 
+				v-on:sub-fontSize="postFontSize -= $event"
+			></blog-posts>
+		</div>
+	</div>
+</body>
+<script src="vue.js"></script>
+<script src="utils.js"></script>
+<script type="text/javascript">
+	Vue.component('button-counter', {
+		data: function () {
+			return {
+				count: 0
+			};
+		},
+		template: '<button v-on:click="count++">You clicked me {{count}} times.</button>'
+	});
+	Vue.component('blog-post', {
+		props: ['title'],
+		template: '<h3>{{title}}</h3>'
+	});
+	Vue.component('blog-posts', {
+		props: ['post'],
+		template: `
+			<div class="blog-post">
+				<h3>{{post.title}}</h3>
+				<button v-on:click="$emit('add-fontsize', 0.1)">add fontSize</button>
+				<button v-on:click="$emit('sub-fontsize', 0.2)">sub fontSize</button>
+				<div v-html="post.content"></div>
+			</div>
+		`
+	});
+	var vm = new Vue({
+		el: '#component-1',
+		data: {
+			posts: [
+				{id: 1, title: 'My journey with Vue', content: '<p>hdsajkh<br>dkjsad</p>'},
+				{id: 2, title: 'Blogging with Vue', content: '<p>hdsajkh<br>dkjsad</p>'},
+				{id: 3, title: 'Why Vue is so fun', content: '<p>hdsajkh<br>dkjsad</p>'},
+			],
+			postFontSize: 1
+		}
+	});
+</script>
+</html>
