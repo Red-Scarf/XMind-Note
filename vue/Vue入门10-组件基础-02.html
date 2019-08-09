@@ -6,13 +6,13 @@
 <body>
 	<div id="vm-1">
 		<!-- 使用事件抛出一个值 -->
-		<div :style="{ fontSize: postFontSize + 'em' }">
-			<blog-posts 
-				v-for="post in posts" 
-				v-bind:key="post.id" 
-				v-bind:post="post" 
-				v-on:add-fontSize="postFontSize += $event" 
-				v-on:sub-fontSize="postFontSize -= $event"
+		<div :style="{fontSize: postFontSize + 'em'}">
+			<blog-posts
+				v-for="post in posts"
+				v-bind:key="post.id"
+				v-bind:post="post"
+				v-on:add-fontsize="postFontSize += $event"
+				v-on:sub-fontsize="postFontSize -= $event"
 			></blog-posts>
 		</div>
 	</div>
@@ -21,12 +21,12 @@
 <script src="utils.js"></script>
 <script type="text/javascript">
 	Vue.component('blog-posts', {
-		props: ['posts'],
+		props: ['post'],
 		template: `
-			<div>
+			<div class="blog-posts">
+				<button v-on:click="$emit('add-fontsize', 0.1)">add fontsize</button>
+				<button v-on:click="$emit('sub-fontsize', 0.8)">sub fontsize</button>
 				<h3>{{post.title}}</h3>
-				<button v-on:click="$emit('add-fontsize', 0.1)">add fontSize</button>
-				<button v-on:click="$emit('sub-fontsize', 0.2)">sub fontSize</button>
 				<div v-html="post.content"></div>
 			</div>
 		`

@@ -52,9 +52,9 @@
 		props: ['post'],
 		template: `
 			<div class="blog-post">
-				<h3>{{post.title}}</h3>
 				<button v-on:click="$emit('add-fontsize', 0.1)">add fontSize</button>
-				<button v-on:click="$emit('sub-fontsize', 0.2)">sub fontSize</button>
+				<button v-on:click="$emit('sub-fontsize', 0.8)">sub fontSize</button>
+				<h3>{{post.title}}</h3>
 				<div v-html="post.content"></div>
 			</div>
 		`
