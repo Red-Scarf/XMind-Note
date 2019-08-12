@@ -45,6 +45,10 @@ git rm -r --cached .
 git add .
 git commit
 git push  -u origin master
+# 永久储存用户名密码
+git config --global credential.helper store
+# 临时储存密码3600秒
+git config credential.helper 'cache --timeout=3600'
 
 git 仓库别名
 mycollection
