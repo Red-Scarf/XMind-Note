@@ -1,6 +1,7 @@
 ## Vue入门10-组件基础
 ### 定义组件
 * 首先是组件的定义，下面例子定义了一个名为 button-counter 的新组件
+
 ```
 Vue.component('button-counter', {
   data: function () {
@@ -129,3 +130,97 @@ Vue.component('blog-post', {
 </button>
 ```
 * 用$event接收这个值
+```
+<div :style="{fontSize: postFontSize + 'em'}">
+    <blog-posts 
+    v-for="post in posts" 
+    v-bind:key="post.id" 
+    v-bind:post="post" 
+    v-on:add-fontsize="postFontSize += $event" 
+    v-on:sub-fontsize="postFontSize -= $event"
+    ></blog-posts>
+</div>
+```
+* 如果这个事件处理函数是一个方法，这个值将会作为第一个参数传入这个方法
+```
+<blog-post
+  ...
+  v-on:enlarge-text="onEnlargeText"
+></blog-post>
+
+methods: {
+  onEnlargeText: function (enlargeAmount) {
+    this.postFontSize += enlargeAmount
+  }
+}
+```
+
+#### 在组件上使用v-model
+* 在input中是 `<input v-model="searchText">` 
+  * 等价于 `<input v-bind:value="searchText" v-on:input="searchText = $event.target.value">`
+* 使用在组件上时`<custom-input v-model="searchText"></custom-input>` 
+  * 等价于 `<custom-input v-bind:value="searchText" v-on:input="searchText = $event"></custom-input>`
+* 为了让input标签正常工作，这个组件内的必须
+  * 将其**value**特性绑定到一个名叫*value*的**prop**上
+  * 在其**input**事件被触发时，将新的值通过自定义的**input**事件抛出
+```
+Vue.component('custom-input', {
+  props: ['value'],
+  template: `
+    <input
+      v-bind:value="value"
+      v-on:input="$emit('input', $event.target.value)"
+    >
+  `
+})
+```
+
+### 通过插槽分发内容
+* Vue的`<slot>`元素就是一个插槽，可以将使用标签时的内容插到插槽的位置
+```
+Vue.component('alert-box', {
+  template: `
+    <div class="demo-alert-box">
+      <strong>Error!</strong>
+      <slot></slot>
+    </div>
+  `
+})
+
+<alert-box>
+  Something bad happened.
+</alert-box>
+```
+
+### 动态组件
+* 通过动态组件可以实现动态加载或者切换组件，比如多标签页面
+* 通过 Vue 的 `<component>` 元素加一个特殊的 `is` 特性来实现
+* 下例中的 `currentTabComponent` 可以包括
+  * 已注册组件的名字
+  * 一个组件的选项对象
+* 实现流程
+  * 先定义好各个组件
+  * 定义一个计算属性(本例中是为了拼接字符串)
+  * 循环tabs生成按钮列，绑定点击事件
+```
+data: {
+	currentTab: 'Home',
+	tabs: ['Home', 'Posts', 'Archive']
+},
+computed: {
+	currentTabComponent: function () {
+		return 'tab-' + this.currentTab.toLowerCase();
+	}
+}
+
+<button
+	v-for="tab in tabs"
+	v-bind:key="tab"
+	v-bind:class="['tab-button', { active: currentTab === tab }]"
+	v-on:click="currentTab = tab"
+>{{tab}}</button>
+<component
+	v-bind:is="currentTabComponent"
+	class="tab"
+></component>
+```

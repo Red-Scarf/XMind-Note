@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>组件基础</title>
+	<link rel="stylesheet" type="text/css" href="button.css">
 </head>
 <body>
 	<div id="vm-1">
@@ -15,6 +16,30 @@
 				v-on:sub-fontsize="postFontSize -= $event"
 			></blog-posts>
 		</div>
+		<br>
+		<br>
+		<!-- 组件上使用v-model -->
+		<custom-input v-model="searchText"></custom-input>
+		<p>searchText: {{searchText}}</p>
+		<br>
+		<br>
+		<!-- 通过插槽分发内容 -->
+		<alert-box>
+			Something bad happened.
+		</alert-box>
+		<br>
+		<br>
+		<!-- 动态组件 -->
+		<button
+			v-for="tab in tabs"
+			v-bind:key="tab"
+			v-bind:class="['tab-button', { active: currentTab === tab }]"
+			v-on:click="currentTab = tab"
+		>{{tab}}</button>
+		<component
+			v-bind:is="currentTabComponent"
+			class="tab"
+		></component>
 	</div>
 </body>
 <script src="vue.js"></script>
@@ -31,6 +56,35 @@
 			</div>
 		`
 	});
+
+	Vue.component('custom-input', {
+		props: ['value'],
+		template: `
+			<input v-bind:value="value" v-on:input="$emit('input', $event.target.value)">
+		`
+	});
+
+	Vue.component('alert-box', {
+		template: `
+			<div class="demo-alert-box">
+				<strong>Error!</strong>
+				<slot></slot>
+			</div>
+		`
+	});
+
+	Vue.component('tab-home', {
+		template: '<div>Home component</div>'
+	});
+
+	Vue.component('tab-posts', {
+		template: '<div>Posts component</div>'
+	});
+
+	Vue.component('tab-archive', {
+		template: '<div>Archive component</div>'
+	});
+
 	var vm = new Vue({
 		el: '#vm-1',
 		data: {
@@ -39,7 +93,15 @@
 				{id: 2, title: 'Blogging with Vue', content: '<p>hdsajkh<br>dkjsad</p>'},
 				{id: 3, title: 'Why Vue is so fun', content: '<p>hdsajkh<br>dkjsad</p>'},
 			],
-			postFontSize: 1
+			postFontSize: 1,
+			searchText: '',
+			currentTab: 'Home',
+			tabs: ['Home', 'Posts', 'Archive']
+		},
+		computed: {
+			currentTabComponent: function () {
+				return 'tab-' + this.currentTab.toLowerCase();
+			}
 		}
 	});
 </script>
