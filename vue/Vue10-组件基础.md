@@ -224,3 +224,19 @@ computed: {
 	class="tab"
 ></component>
 ```
+
+#### 解析 DOM 模板时的注意事项
+* 部分特定元素对于内部的元素是有一定限制的，比如 `<selection>` 内只能有 `<option>` 元素
+* 这就导致组件模板元素符合条件，但组件名称不符合的时候，渲染失败
+* 可以使用is属性绕过这个限制
+```
+<-- 这样不合法 -->
+<table>
+  <blog-post-row></blog-post-row>
+</table>
+
+<-- 这样合法 -->
+<table>
+  <tr is="blog-post-row"></tr>
+</table>
+```
