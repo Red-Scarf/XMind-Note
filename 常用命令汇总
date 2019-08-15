@@ -19,6 +19,17 @@ sc query mysql
 sc delete mysql
 
 
+redis
+启动
+redis-server
+redis-server.exe redis.windows.conf
+redis-cli -h 127.0.0.1 -p 6379
+进去之后要登录
+auth 密码
+获取密码
+config get requirepass
+
+
 git
 git add .
 git add dzy/dzy.php
