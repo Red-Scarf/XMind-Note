@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>组件prop</title>
+</head>
+<body>
+	<div id="vm1">
+		<props-test v-bind:initial="init"></props-test>
+		<br>
+		<br>
+		<h3>子组件直接修改父级别的数组或对象</h3>
+		<p>father: {{arr}}</p>
+		<son-test v-bind:sonarr="arr"></son-test>
+		<br>
+		<br>
+		<h3>prop验证规则</h3>
+		<!-- v-bind使用的是 -->
+		<validate-test
+			v-bind:prop-a="propA"
+			v-bind:prop-b="propB"
+			v-bind:prop-c="propC"
+			v-bind:prop-d="propD"
+			v-bind:prop-e="propE"
+			v-bind:prop-f="propF"
+		></validate-test>
+	</div>
+</body>
+<script src="vue.js"></script>
+<script src="utils.js"></script>
+<script type="text/javascript">
+	Vue.component('props-test', {
+		props: ['initial'],
+		data: function () {
+			return {
+				counter: this.initial
+			};
+		},
+		template: '<p>{{counter}}</p>'
+	});
+	Vue.component('son-test', {
+		props: ['sonarr'],
+		data: function () {
+			return {
+				str: ''
+			};
+		},
+		methods: {
+			pushArr: function () {
+				this.sonarr.push(this.str);
+				console.log(this.str==='' ? 'null' : this.str);
+			}
+		},
+		template: `
+			<div>
+				<p>son: {{sonarr}}</p>
+				<input v-model="str" placeholder="edit">
+				<p>str: {{str}}</p>
+				<button v-on:click="pushArr">push str</button>
+			</div>
+		`
+	});
+	Vue.component('validate-test', {
+		props: {
+			// 单个基本数据类型(`null` 和 `undefined` 会通过任何类型验证)
+			propA: Number,
+			// 多个可能类型
+			propB: [String, Number],
+			// 必填
+			propC: {
+				type: String,
+				requires: true
+			},
+			// 带有默认值
+			propD: {
+				type: Number,
+				default: 100
+			},
+			// 带有默认值的对象
+			propE: {
+				type: Object,
+				// 对象或数组默认值必须返回一个工厂函数获取
+				default: function () {
+					return {message: 'hello'};
+				}
+			},
+			// 自定义验证函数
+			propF: {
+				validator: function (value) {
+					// value必须是下列中的一个
+					return ['success', 'warning', 'danger'].indexOf(value) !== -1;
+				}
+			}
+		},
+		template: `
+			<div>
+				<p>propA: {{propA}}</p>
+				<p>propB: {{propB}}</p>
+				<p>propC: {{propC}}</p>
+				<p>propD: {{propD}}</p>
+				<p>propE: {{propE}}</p>
+				<p>propF: {{propF}}</p>
+			</div>
+		`
+	});
+	var vm1 = new Vue({
+		el: '#vm1',
+		data: {
+			init: 'dsjh',
+			arr: ['asd', 'jkas', 'asd'],
+			propA: 123,
+			propB: '123',
+			propC: 'afsd',
+			propD: 88,
+			propE: function () {
+				return {message:'123'};
+			},
+			propF: 'success',
+		}
+	});
+</script>
+</html>
