@@ -40,11 +40,13 @@ git pull master
 git config --global user.name "dzy"
 git config --global user.email "70@qq.com"
 git remote add name url
+
 # 回滚到上一个版本
 git reset –hard HEAD~1 
 git add . 
 git commit ‘roll-back’ 
 git push -f origin master
+
 # 删除Git服务器文件
 ## 方法一
 git rm -r --cached vue/vue.js #--cached不会把本地文件删除
@@ -56,10 +58,22 @@ git rm -r --cached .
 git add .
 git commit
 git push  -u origin master
+
 # 永久储存用户名密码
 git config --global credential.helper store
+
 # 临时储存密码3600秒
 git config credential.helper 'cache --timeout=3600'
+
+# 同步远程代码到本地
+## 拉取仓库代码创建本地temp分支
+git fetch mycollection master:temp
+## 比较本地代码和temp分支的不同
+git diff temp
+## 合并分支到本地
+git merge temp
+## 删除temp分支
+git branch -d temp
 
 git 仓库别名
 mycollection
