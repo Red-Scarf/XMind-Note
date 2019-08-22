@@ -181,4 +181,19 @@ Vue.component('blog-post', {
 ## 非 Prop 的特性
 * 一个非 prop 特性是指传向一个组件，但是该组件并没有相应 prop 定义的特性
 * 显式定义的 prop 适用于向一个子组件传入信息，然而组件库的作者并不总能预见组件会被用于怎样的场景
-* 
+* 使用第三方组件时，会将外部调用时的属性自动写入到组件的根节点中
+```
+// 自动添加到组件的根元素上
+<bootstrap-date-input data-date-picker="activated"></bootstrap-date-input>
+```
+### 替换/合并已有的特性
+* 外部写了class或style时，会自动与组件根节点的class或style合并
+### 禁用特性继承
+* 不想组件的根元素继承特性，可以在组件的选项中设置 inheritAttrs: false
+* inheritAttrs: false 选项不会影响 style 和 class 的绑定
+```
+Vue.component('my-component', {
+  inheritAttrs: false,
+  // ...
+})
+```

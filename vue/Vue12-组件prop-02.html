@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>组件prop</title>
+</head>
+<body>
+	<div id="vm1">
+		<!-- 外部的属性会自动添加到组件的根节点中，如果是class或style会自动合并 -->
+		<inner-test v-bind:class="outerclass" dsa-ji="nm"></inner-test>
+		<br>
+		<br>
+		<!-- 禁用特性继承 -->
+		<inherit-test v-bind:value="value" v-bind:label="label" v-bind="required" v-bind:placeholder="placeholder"></inherit-test>
+	</div>
+</body>
+<script src="vue.js"></script>
+<script src="utils.js"></script>
+<script type="text/javascript">
+	Vue.component('inner-test', {
+		props: ['outer-class'],
+		template: `
+			<div class="inner dasd">
+				<h2 class="asd"> hhhh </h2>
+				<p> aaaaa </p>
+			</div>
+		`
+	});
+	Vue.component('inherit-test', {
+		inheritAttrs: false,
+		props: ['label', 'value'],
+		template: `
+			<label>
+				{{label}}
+				<input
+					v-bind="$attrs"
+					v-bind:value="value"
+					v-on:input="$emit('input', $event.target.value)"
+				>
+			</label>
+		`
+	});
+	var vm1 = new Vue({
+		el: '#vm1',
+		data: {
+			outerclass: 'date-picker-theme-dark',
+			required: true,
+			placeholder: 'Enter your username',
+			label: '123',
+			value: 'ui'
+		}
+	});
+</script>
+</html>
