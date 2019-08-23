@@ -197,3 +197,14 @@ Vue.component('my-component', {
   // ...
 })
 ```
+* 当prop中没有定义的元素出现在html调用的元素中，会统一存在$attrs内，在组件的子元素中使用$attrs可以获取所有的漏下来的属性
+```
+<div>
+    {{label}}
+    <input 
+    	v-bind="$attrs" 
+    	v-bind:value="value" 
+    	v-on:input="$emit('input', $event.target.value)"
+    >
+</div>
+```

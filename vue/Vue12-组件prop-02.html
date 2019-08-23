@@ -10,7 +10,7 @@
 		<br>
 		<br>
 		<!-- 禁用特性继承 -->
-		<inherit-test v-bind:value="value" v-bind:label="label" v-bind="required" v-bind:placeholder="placeholder"></inherit-test>
+		<inherit-test v-bind:label="label" v-bind:placeholder="placeholder" v-bind:aaa="aaa"></inherit-test>
 	</div>
 </body>
 <script src="vue.js"></script>
@@ -29,24 +29,24 @@
 		inheritAttrs: false,
 		props: ['label', 'value'],
 		template: `
-			<label>
+			<div>
 				{{label}}
 				<input
 					v-bind="$attrs"
 					v-bind:value="value"
 					v-on:input="$emit('input', $event.target.value)"
 				>
-			</label>
+			</div>
 		`
 	});
 	var vm1 = new Vue({
 		el: '#vm1',
 		data: {
 			outerclass: 'date-picker-theme-dark',
-			required: true,
 			placeholder: 'Enter your username',
 			label: '123',
-			value: 'ui'
+			value: 'ui',
+			aaa: 'ashdjk'
 		}
 	});
 </script>
