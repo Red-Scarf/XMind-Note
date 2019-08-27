@@ -10,7 +10,8 @@
 		<br>
 		<br>
 		<!-- 原生事件绑定到组件 -->
-		
+		<base-input v-on:input.native="onFocus"></base-input>
+		<p> {{count}} </p>
 	</div>
 </body>
 <script src="vue.js"></script>
@@ -37,20 +38,27 @@
 		props: ['label', 'value'],
 		computed: {
 			inputListeners: function () {
-				var vm = this;
-				return Object.assign(
-					{},
+				var vm = this
+				// 将所有的对象合并成一个新对象
+				return Object.assign({},
+					// 从父级添加所有监听器
+					// 或覆写一些监听器行为
 					this.$listeners,
 					{
+						// 确保组件配合v-mode工作
 						input: function (event) {
 							vm.$emit('input', event.target.value);
+						},
+						focus: function (event) {
+							vm.$emit('focus', event.target.value)
 						}
 					}
-				);
+				)
 			}
 		},
 		template: `
 			<label>
+				{{label}}
 				<input
 					v-bind="$attrs"
 					v-bind:value="value"
@@ -62,7 +70,14 @@
 	var vm1 = new Vue({
 		el: '#vm1',
 		data: {
-			learningVue: false
+			learningVue: false,
+			count: 1
+		},
+		methods: {
+			onFocus: function (event) {
+				// console.log(event);
+				this.count += 1;
+			}
 		}
 	});
 </script>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>sync修饰符</title>
+</head>
+<body>
+	<div id="vm1">
+		<sync-test
+			v-bind:title="doc.title"
+			v-on:update:title="doc.title = $event"
+		></sync-test>
+	</div>
+</body>
+<script src="vue.js"></script>
+<script src="utils.js"></script>
+<script type="text/javascript">
+	Vue.component('sync-test', {
+		prop: [title],
+		template: `
+			<h3> {{title}} </h3>
+		`
+	});
+	var vm1 = new Vue({
+		el: 'vm1',
+		data: {
+			doc: {
+				title: 'this is title'
+			}
+		}
+	});
+</script>
+</html>
