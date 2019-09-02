@@ -39,7 +39,20 @@ git status
 git pull master
 git config --global user.name "dzy"
 git config --global user.email "70@qq.com"
+
+# 添加远程仓库
 git remote add name url
+# 删除远程仓库
+git remote rm [name]
+# 修改远程仓库
+git remote set-url --push [name] [newUrl]
+
+
+# 查看远程库
+git remote show
+git remote -v
+# 显示远程库origin里的资源
+git remote show origin
 
 # 回滚到上一个版本
 git reset –hard HEAD~1 
