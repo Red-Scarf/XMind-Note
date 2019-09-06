@@ -60,6 +60,10 @@ git add .
 git commit ‘roll-back’ 
 git push -f origin master
 
+# commit相关操作
+## 撤回commit
+git reset --soft HEAD^
+
 # 删除Git服务器文件
 ## 方法一
 git rm -r --cached vue/vue.js #--cached不会把本地文件删除
