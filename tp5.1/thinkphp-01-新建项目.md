@@ -71,6 +71,7 @@ class Staff extends model {
 }
 ```
 #### 新增数据
+##### 一条数据
 * 插入数据的方法有很多
 ```
 $user           = new User;
@@ -119,6 +120,53 @@ $user->save();
 echo $user->id;
 ```
 > 这里其实是获取模型的主键，如果你的主键不是id，而是user_id的话，其实获取自增ID就变成这样`$user->user_id;`
+##### 多条数据
+* 支持批量新增，可以使用**二维数组**
+  * saveAll方法新增数据返回的是包含新增模型（带自增ID）的数据集对象。
+  * saveAll方法新增数据默认会自动识别数据是需要新增还是更新操作，当数据中存在主键的时候会认为是更新操作
+```
+$user = new User;
+$list = [
+    ['name'=>'thinkphp','email'=>'thinkphp@qq.com'],
+    ['name'=>'onethink','email'=>'onethink@qq.com']
+];
+$user->saveAll($list);
+```
+* 如果需要带主键数据批量新增
+```
+$user = new User;
+$list = [
+    ['id'=>1, 'name'=>'thinkphp', 'email'=>'thinkphp@qq.com'],
+    ['id'=>2, 'name'=>'onethink', 'email'=>'onethink@qq.com'],
+];
+$user->saveAll($list, false);
+```
+* 静态方法
+  * 和save方法不同的是，create方法返回的是当前模型的对象实例。
+```
+$user = User::create([
+    'name'  =>  'thinkphp',
+    'email' =>  'thinkphp@qq.com'
+]);
+echo $user->name;
+echo $user->email;
+echo $user->id; // 获取自增ID
+```
+* create方法的第二个参数可以传入允许写入的字段列表（传入true则表示仅允许写入数据表定义的字段数据）
+```
+// 只允许写入name和email字段的数据
+$user = User::create([
+    'name'  =>  'thinkphp',
+    'email' =>  'thinkphp@qq.com'
+], ['name', 'email']);
+echo $user->name;
+echo $user->email;
+echo $user->id; // 获取自增ID
+```
+> **新增数据的最佳实践原则：使用create方法新增数据，使用saveAll批量新增数据。**
+
+#### 更新数据
+> **在取出数据后，更改字段内容后使用save方法更新数据。这种方式是最佳的更新方式。**
 #### 模型关联
 
 
