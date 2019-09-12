@@ -168,6 +168,17 @@ echo $user->id; // 获取自增ID
 #### 更新数据
 > **在取出数据后，更改字段内容后使用save方法更新数据。这种方式是最佳的更新方式。**
 #### 模型关联
+##### 创建关联
+* 首先要确定模型间的关系，确定主键和外键的字段
+* 创建模型关联，只需要在模型中写好方法即可
+```
+// person和sex模型，person中有person_sex字段
+// 对应的是sex中的sex_no字段，要获取的是sex_name
+// 所以需要在person模型中写方法
+public function sex() {
+  return $this->hasOne('Sex', 'sex_no', 'person_sex');
+}
+```
 
 
 ### 静态资源
