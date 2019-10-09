@@ -37,6 +37,7 @@ var app = new Vue({
 ```
 #### v-bind
 * 可以绑定表达式，包括字符串拼接、逻辑表达式、运算表达式。
+* 简写，:属性，例`:title="aaa"`
 ```
 <div id="app-2">
   <span v-bind:title="message">

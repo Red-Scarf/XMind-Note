@@ -4,6 +4,7 @@
 监听 DOM 事件，并在触发时运行一些 JavaScript 代码
 ### 监听事件
 * v-on 可以接收一个需要调用的方法名称
+* 简写 @事件，例`@click="test()"`
 ```
 <button v-on:click="greet">Greet</button>
 methods: {
