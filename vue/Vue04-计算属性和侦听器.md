@@ -17,6 +17,7 @@ computed: {
 * 计算属性需要定义在computed内部
 * 直接使用模板语法的文本插值的调用方式就能使用
 * 计算属性就是一个可以实现复杂逻辑的表达式
+* 计算属性只在依赖数据发生改变时才会执行计算结果
 * reversedMessage依赖于message，当message更新时会自动更新reversedMessage
 
 ### 计算属性缓存vs方法
