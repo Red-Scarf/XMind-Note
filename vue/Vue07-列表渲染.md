@@ -133,7 +133,9 @@ methods: {
 * 不建议一起使用
 * 当一起使用时，for有较高的优先级
 ### 组件上使用for
-* 2.2.0+ 的版本里，当在组件上使用 v-for 时，key 现在是必须的。
+* 2.2.0+ 的版本里，当在组件上使用 v-for 时，key 现在是必须的(不论是否为组件，都要使用key)。
+* 不适用key，Vue会将网页元素DOM与数据随机组合，而不会将同一批次视为一体。
+* key只支持字符串或数值
 ```
 <my-component v-for="item in items" :key="item.id"></my-component>
 ```
