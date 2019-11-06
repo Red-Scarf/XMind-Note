@@ -16,6 +16,11 @@ git remote rm [name]
 # 修改远程仓库
 git remote set-url --push [name] [newUrl]
 
+# 查看ssh秘钥，前提是使用默认路径和文件名
+cat ~/.ssh/id_rsa.pub
+# 新增一个ssh秘钥，引号里面是自己的
+# 该命令之后会要求输入路径和文件名，直接回车就是使用默认设置
+ssh-keygen -t rsa -C "705762646@qq.com"
 
 # 查看远程库
 git remote show
