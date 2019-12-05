@@ -93,3 +93,17 @@ $ docker container ls --all
 ```
 $ docker container rm [containerID]
 ```
+* 使用`--restart`命令设置容器自动重启
+```
+docker run -m 512m --memory-swap 1G -it -p 58080:8080 --restart=always 
+--name bvrfis --volumes-from logdata mytomcat:4.0 /root/run.sh
+```
+* `--restart`详细参数
+    * no -  容器退出时，不重启容器
+    * on-failure - 只有在非0状态退出时才从新启动容器
+    * always - 无论退出状态是如何，都重启容器
+    * 还可以在使用on - failure策略时，指定Docker将尝试重新启动容器的最大次数
+* 如果创建时未指定`--restart=always`，可通过update 命令
+```
+docker update --restart=always xxx
+```
