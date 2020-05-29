@@ -39,5 +39,47 @@ m = stuClass.getDeclaredMethod("show4", int.class); // 获取私有方法
 
 ### Java 泛型
 #### 类型擦除
-使用泛型，仅在编译期生效，Java 编译时会检测泛型指定的类型是否使用出错，编译完成后，泛型消失。
-> `List<Object>` 或 `List<String>` 编译后都是 `List`
+使用泛型，仅在编译期生效，Java 编译时会检测泛型指定的类型是否使用出错，编译完成后，泛型消失，将泛型转换成原始类型。
+
+> `List<Integer>` 或 `List<String>` 编译后都是 `List<Object>`
+
+上述例子中，`Object`就是原始类型，而在`public class Pair<T extends Comparable> {}`中`Comparable`就是原始类型。
+
+* 在不指定泛型的情况下，泛型变量的类型为该方法中的几种类型的同一父类的最小级，直到Object
+* 在指定泛型的情况下，该方法的几种类型必须是该泛型的实例的类型或者其子类
+
+泛型的检查是在编译之前。
+```
+ArrayList<String> list1 = new ArrayList(); //第一种 情况
+ArrayList list2 = new ArrayList<String>(); //第二种 情况
+```
+第一种情况，可以实现与完全使用泛型参数一样的效果，第二种则没有效果。
+
+因为类型检查就是编译时完成的，new ArrayList()只是在内存中开辟了一个存储空间，可以存储任何类型对象，而真正设计类型检查的是它的引用，因为我们是使用它引用list1来调用它的方法，比如说调用add方法，所以list1引用能完成泛型类型的检查。而引用list2没有使用泛型，所以不行。
+
+类型检查就是针对引用的，谁是一个引用，用这个引用调用泛型方法，就会对这个引用调用的方法进行类型检测，而无关它真正引用的对象。
+
+泛型编译时不允许强转
+```
+ArrayList<String> list1 = new ArrayList<Object>(); //编译错误  
+ArrayList<Object> list2 = new ArrayList<String>(); //编译错误
+```
+
+```
+public E get(int index) {
+    RangeCheck(index);  
+    return (E) elementData[index];  
+}
+```
+如果使用时，E=Date，则泛型会在编译时，将`(E)`自动转换为`(Date)`
+
+**泛型类中的静态方法和静态变量不可以使用泛型类所声明的泛型类型参数。**
+* 因为泛型类中的泛型参数的实例化是在定义对象的时候指定的，而静态变量和静态方法不需要使用对象来调用。
+* 但是要注意区分下面的一种情况。因为这是一个泛型方法，在泛型方法中使用的T是自己在方法中定义的 T，而不是泛型类中的T。
+```
+public class Test2<T> {
+    public static <T >T show(T one){ //这是正确的
+        return null;
+    }
+}
+```
