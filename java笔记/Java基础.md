@@ -6,7 +6,7 @@
 #### 1.2.7 Java 泛型
 #### 泛型的使用方式
 * 泛型类
-```
+```java
 // 此处T可以随便写为任意标识，常见的如T、E、K、V等形式的参数常用于表示泛型
 // 在实例化泛型类时，必须指定T的具体类型
 public class Generic<T>{ 
@@ -22,7 +22,7 @@ public class Generic<T>{
 Generic<Integer> genericInteger = new Generic<Integer>(123456);
 ```
 * 泛型接口
-```
+```java
 public interface Generator<T> {
     public T method();
 }
@@ -42,7 +42,7 @@ class GeneratorImpl<T> implements Generator<String>{
 }
 ```
 * 泛型方法
-```
+```java
 public static < E > void printArray( E[] inputArray )
 {         
     for ( E element : inputArray ){        
@@ -78,7 +78,7 @@ printArray( stringArray  );
 * 在指定泛型的情况下，该方法的几种类型必须是该泛型的实例的类型或者其子类
 
 泛型的检查是在编译之前。
-```
+```java
 ArrayList<String> list1 = new ArrayList(); //第一种 情况
 ArrayList list2 = new ArrayList<String>(); //第二种 情况
 ```
@@ -89,12 +89,12 @@ ArrayList list2 = new ArrayList<String>(); //第二种 情况
 类型检查就是针对引用的，谁是一个引用，用这个引用调用泛型方法，就会对这个引用调用的方法进行类型检测，而无关它真正引用的对象。
 
 泛型编译时不允许强转
-```
+```java
 ArrayList<String> list1 = new ArrayList<Object>(); //编译错误  
 ArrayList<Object> list2 = new ArrayList<String>(); //编译错误
 ```
 
-```
+```java
 public E get(int index) {
     RangeCheck(index);  
     return (E) elementData[index];  
@@ -105,7 +105,7 @@ public E get(int index) {
 **泛型类中的静态方法和静态变量不可以使用泛型类所声明的泛型类型参数。**
 * 因为泛型类中的泛型参数的实例化是在定义对象的时候指定的，而静态变量和静态方法不需要使用对象来调用。
 * 但是要注意区分下面的一种情况。因为这是一个泛型方法，在泛型方法中使用的T是自己在方法中定义的 T，而不是泛型类中的T。
-```
+```java
 public class Test2<T> {
     public static <T >T show(T one){ //这是正确的
         return null;
@@ -117,7 +117,7 @@ public class Test2<T> {
 * `==` : 它的作用是判断两个对象的地址是不是相等。即判断两个对象是不是同一个对象。**(基本数据类型==比较的是值，引用数据类型==比较的是内存地址)**
 > 因为 Java 只有值传递，所以，对于 == 来说，不管是比较基本数据类型，还是引用数据类型的变量，其本质比较的都是值，只是引用类型变量存的值是对象的地址。
 * equals() : 它的作用也是判断两个对象是否相等，它不能用于比较基本数据类型的变量。equals()方法存在于Object类中，而Object类是所有类的直接或间接父类。
-```
+```java
 // Object类equals()方法
 public boolean equals(Object obj) {
      return (this == obj);
@@ -126,7 +126,7 @@ public boolean equals(Object obj) {
 
 #### 1.2.9. hashCode()与 equals()
 * `hashCode()`的作用是获取哈希码，它实际上是返回一个 int 整数。
-```
+```java
 public native int hashCode();
 ```
 * hashCode 意义和使用场景
@@ -197,7 +197,7 @@ Java9 开始接口允许私有方法和私有静态变量。
 ### 2.5 其他
 #### String 、 StringBuffer 、 StringBuilder
 * String 使用 final 修饰字符数组，所以才说 String 不可变，不能在不改变引用地址的前提下改变 String 中的值。
-```
+```java
 private final char value[]
 ```
 * `StringBuilder`与`StringBuffer`均继承自`AbstractStringBuilder`，但`AbstractStringBuilder`没有使用 final 修饰字符数组。
@@ -206,47 +206,47 @@ private final char value[]
 * `String`每次修改时，都是生成一个新的String对象，然后引用指向该对象，所以性能最差。
 
 #### Object 类的常见方法总结
-```
+```java
 public final native Class<?> getClass()
 ```
 返回当前运行时对象的Class对象
-```
+```java
 public native int hashCode()
 ```
 返回对象的哈希码，主要使用在哈希表中
-```
+```java
 public boolean equals(Object obj)
 ```
 比较2个对象的内存地址是否相等
-```
+```java
 protected native Object clone() throws CloneNotSupportedException
 ```
 克隆方法
-```
+```java
 public String toString()
 ```
 返回类的名字@实例的哈希码的16进制的字符串。建议Object所有的子类都重写这个方法。
-```
+```java
 public final native void notify()
 ```
 唤醒一个在此对象监视器上等待的线程(监视器相当于就是锁的概念)。如果有多个线程在等待只会任意唤醒一个。
-```
+```java
 public final native void notifyAll()
 ```
 唤醒在此对象监视器上等待的所有线程
-```
+```java
 public final native void wait(long timeout) throws InterruptedException
 ```
 暂停线程的执行。注意：sleep方法没有释放锁，而wait方法释放了锁 。timeout是等待时间。
-```
+```java
 public final void wait(long timeout, int nanos) throws InterruptedException
 ```
 多了nanos参数，这个参数表示额外时间（以毫微秒为单位，范围是 0-999999）
-```
+```java
 public final void wait() throws InterruptedException
 ```
 跟之前的2个wait方法一样，只不过该方法一直等待，没有超时时间这个概念
-```
+```java
 protected void finalize() throws Throwable
 ```
 实例被垃圾回收器回收的时候触发的操作
@@ -257,20 +257,20 @@ protected void finalize() throws Throwable
 
 #### 键盘输入
 Scanner
-```
+```java
 Scanner input = new Scanner(System.in);
 String s  = input.nextLine();
 input.close();
 ```
 BufferedReader
-```
+```java
 BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 String s = input.readLine();
 ```
 
 ### Java 反射
 #### 实际使用
-```
+```java
 Class stuClass = Class.forName("fanshe.field.Student"); // 获取类的定义
 Object obj = stuClass.getConstructor().newInstance(); // 获取对象
 fieldArray = stuClass.getDeclaredFields(); // 获取所有字段
