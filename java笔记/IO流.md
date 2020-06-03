@@ -20,3 +20,5 @@
 
 #### BIO, NIO, AIO
 * BIO (Blocking I/O): 同步阻塞 I/O 模式,数据的读取写入必须阻塞在一个线程内等待其完成.单机小于1000的连接,可以使用BIO,使用比较简单
+* NIO (Non-blocking/New I/O): NIO 是一种同步非阻塞的 I/O 模型，在 Java 1.4 中引入了 NIO 框架，对应 java.nio 包，提供了 Channel , Selector，Buffer 等抽象。NIO 提供了与传统 BIO 模型中的 Socket 和 ServerSocket 相对应的`SocketChannel`和`ServerSocketChannel`两种不同的套接字通道实现,两种通道都支持阻塞和非阻塞两种模式。
+* AIO (Asynchronous I/O): AIO 也就是 NIO 2,在 Java 7 中引入,是异步非阻塞的 IO 模型。异步 IO 是基于事件和回调机制实现的，也就是应用操作之后会直接返回，不会堵塞在那里，当后台处理完成，操作系统会通知相应的线程进行后续的操作。**应用不广,Netty尝试过又放弃了。**
