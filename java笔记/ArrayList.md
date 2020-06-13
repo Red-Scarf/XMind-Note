@@ -44,3 +44,7 @@ public ArrayList() {
 ### 3.1 快速失败
 ### 3.2 遍历时删除
 ## 4 总结
+
+## 来源文章
+
+http://www.tianxiaobo.com/2018/01/28/ArrayList%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/
