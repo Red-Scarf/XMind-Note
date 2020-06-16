@@ -151,14 +151,136 @@ public E remove(int index) {
     elementData[--size] = null; // clear to let GC do its work
     return oldValue;
 }
+E elementData(int index) {
+    return (E) elementData[index];
+}
+/** 删除指定元素，若元素重复，则只删除下标最小的元素 */
+public boolean remove(Object o) {
+    if (o == null) {
+        for (int index = 0; index < size; index++)
+            if (elementData[index] == null) {
+                fastRemove(index);
+                return true;
+            }
+    } else {
+        // 遍历数组，查找要删除元素的位置
+        for (int index = 0; index < size; index++)
+            if (o.equals(elementData[index])) {
+                fastRemove(index);
+                return true;
+            }
+    }
+    return false;
+}
+/** 快速删除，不做边界检查，也不返回删除的元素值 */
+private void fastRemove(int index) {
+    modCount++;
+    int numMoved = size - index - 1;
+    if (numMoved > 0)
+        System.arraycopy(elementData, index+1, elementData, index, numMoved);
+    elementData[--size] = null; // clear to let GC do its work
+}
 ```
-```java
+删除操作除了删除元素，还要将 size 减一
 
+![](img/15171118248304.jpg)
+
+如果数组扩容之后删除多个元素导致大量空闲空间，程序员可以主动触发空间缩减的方法。
+
+```java
+/** 将数组容量缩小至元素数量 */
+public void trimToSize() {
+    modCount++;
+    if (size < elementData.length) {
+        elementData = (size == 0)
+          ? EMPTY_ELEMENTDATA
+          : Arrays.copyOf(elementData, size);
+    }
+}
 ```
+
 ### 2.4 遍历
+ArrayList 实现了 RandomAccess 接口(表示它可以随机访问)，所以下标直接访问效率比较高。
+
+```java
+for (int i = 0; i < list.size(); i++) {
+    list.get(i);
+}
+```
+
 ## 3 其他
 ### 3.1 快速失败
+
+在 Java 集合框架中，很多类都实现了快速失败机制。该机制被触发时，会抛出并发修改异常ConcurrentModificationException 。
+
+ArrayList 迭代器中的方法都是均具有快速失败的特性，当遇到并发修改的情况时，迭代器会快速失败，以避免程序在将来不确定的时间里出现不确定的行为。
+
 ### 3.2 遍历时删除
+
+> 不要在 foreach 循环里进行元素的 remove/add 操作。remove 元素请使用 Iterator 方式，如果并发操作，需要对 Iterator 对象加锁。
+
+```java
+List<String> a = new ArrayList<String>();
+	a.add("1");
+	a.add("2");
+	for (String temp : a) {
+	    System.out.println(temp);
+	    if("1".equals(temp)){
+	        a.remove(temp);
+	    }
+	}
+}
+```
+
+上面的程序执行起来不会虽不会出现异常，但代码执行逻辑上却有问题，只不过这个问题隐藏的比较深。我们把 temp 变量打印出来，会发现只打印了数字1，2没打印出来。初看这个执行结果确实很让人诧异，不明原因。如果死抠上面的代码，我们很难找出原因，此时需要稍微转换一下思路。我们都知道 Java 中的 foreach 是个语法糖，编译成字节码后会被转成用迭代器遍历的方式。所以我们可以把上面的代码转换一下，等价于下面形式：
+
+```java
+List<String> a = new ArrayList<>();
+a.add("1");
+a.add("2");
+Iterator<String> it = a.iterator();
+while (it.hasNext()) {
+    String temp = it.next();
+    System.out.println("temp: " + temp);
+    if("1".equals(temp)){
+        a.remove(temp);
+    }
+}
+```
+
+再去分析一下 ArrayList 的迭代器源码
+
+```java
+private class Itr implements Iterator<E> {
+    int cursor;       // index of next element to return
+    int lastRet = -1; // index of last element returned; -1 if no such
+    int expectedModCount = modCount;
+    public boolean hasNext() {
+        return cursor != size;
+    }
+    @SuppressWarnings("unchecked")
+    public E next() {
+        // 并发修改检测，检测不通过则抛出异常
+        checkForComodification();
+        int i = cursor;
+        if (i >= size)
+            throw new NoSuchElementException();
+        Object[] elementData = ArrayList.this.elementData;
+        if (i >= elementData.length)
+            throw new ConcurrentModificationException();
+        cursor = i + 1;
+        return (E) elementData[lastRet = i];
+    }
+    final void checkForComodification() {
+        if (modCount != expectedModCount)
+            throw new ConcurrentModificationException();
+    }
+    // 省略不相关的代码
+}
+```
+
+删除元素 1 后，元素计数器 size = 1，而迭代器中的 cursor 也等于 1，从而导致 it.hasNext() 返回false。归根结底，上面的代码段没抛异常的原因是，循环提前结束，导致 next 方法没有机会抛异常。
+
 ## 4 总结
 
 ## 来源文章
