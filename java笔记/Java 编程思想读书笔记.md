@@ -73,4 +73,43 @@ Java 中除了 static， finall（private 属于 finall），其他所有方法�
 
 因为 private 属性/方法无法在子类使用，非 private 才可以覆盖（重写），
 
+并不是所有的东西都是多态，只有**普通的方法调用才是多态**。例如直接访问某个域（对象属性），这个访问在编译期就会进行解析。
+```java
+public class TestFather {
+    public int theProperty = 0;
+    public int getTheProperty() {
+        return theProperty;
+    }
+}
+public class TestSon extends TestFather {
+    public int theProperty = 1;
+    @Override
+    public int getTheProperty() {
+        return theProperty;
+    }
+    public int getFatherProperty() {
+        return super.theProperty;
+    }
+}
+class DemoApplicationTests {
+	@Test
+	void contextLoads() {
+		TestSon son1 = new TestSon();
+		System.out.println(son1.theProperty); // 1
+		System.out.println(son1.getTheProperty()); // 1
+		System.out.println(son1.getFatherProperty()); // 0
+		TestFather son2 = new TestSon();
+		System.out.println(son2.theProperty); // 0
+		System.out.println(son2.getTheProperty()); // 1
+	}
+}
+```
+当子类转型成父类时，任何对属性的操作都将由编译器解析。上述例子中，`TestSon.theProperty`和`TestFather.theProperty`有不一样的存储空间。即`TestSon`实际上包含了自己的和继承的`theProperty`属性，在使用时必须指明时哪个，即显式调用。
 
+使用private进行封装是比较好的规避方法。
+
+静态方法不具有多态性。
+
+### 8.3 构造器和多态
+
+构造器隐式声明 static，
