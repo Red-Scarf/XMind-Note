@@ -28,3 +28,5 @@ redis-cli -h 127.0.0.1 -p 6379
 auth 密码
 获取密码
 config get requirepass
+启动redis
+redis-server /etc/redis.conf &
