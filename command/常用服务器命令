@@ -30,3 +30,6 @@ auth 密码
 config get requirepass
 启动redis
 redis-server /etc/redis.conf &
+
+nginx 目录
+/usr/local/nginx
