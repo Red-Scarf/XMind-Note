@@ -17,6 +17,12 @@ mysql -uroot -p
 sc query mysql
 删除服务
 sc delete mysql
+系统服务
+systemctl start mysqld.service
+systemctl status mysqld.service
+systemctl stop mysqld.service
+systemctl restart mysqld.service
+systemctl enable mysqld.service 自启
 
 
 redis
