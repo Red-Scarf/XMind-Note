@@ -39,3 +39,14 @@ redis-server /etc/redis.conf &
 
 nginx 目录
 /usr/local/nginx
+nginx 操作
+从容停止服务  nginx -s quit
+立即停止服务  nginx -s stop
+systemctl 停止  systemctl stop nginx.service
+killall 方法杀死进程  killall nginx
+nginx直接启动  ./nginx
+systemctl命令启动  systemctl start nginx.service
+查看启动后记录  ps aux | grep nginx
+重启Nginx服务  systemctl restart nginx.service
+重新载入配置文件  nginx -s reload
+查看端口号  netstat -tlnp
