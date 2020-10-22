@@ -42,3 +42,6 @@ who 可以看有谁在线
 netstat 看当前网络状态
 
 sync 一般 reboot/shutdown/halt 均会先执行 sync 数据同步写入磁盘
+
+查询程序安装包等
+rpm -qa | grep php
