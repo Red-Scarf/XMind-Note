@@ -45,3 +45,15 @@ sync 一般 reboot/shutdown/halt 均会先执行 sync 数据同步写入磁盘
 
 查询程序安装包等
 rpm -qa | grep php
+
+查看用户: cut -d : -f 1 /etc/passwd
+查看用户组: cut -d : -f 1 /etc/group
+删除xiaoluo这个用户: userdel -r xiaoluo
+
+修改文件/目录权限/用户
+chmod 755 a.txt 修改文件权限
+chmod 600 my/  只改变文件夹本身权限，不改动子文件（夹）
+chmod -R 777 my/  改变文件夹及子目录下所有文件（夹）权限
+chown qq /home/qq  (把home目录下的qq目录的拥有者改为qq用户)
+chown qq:aa /home/qq  (把home目录下的qq目录的拥有者改为qq用户，用户组改为aa)
+chgrp qq /home/qq  (把home目录下的qq目录的所属组改为qq组)
