@@ -50,3 +50,6 @@ systemctl命令启动  systemctl start nginx.service
 重启Nginx服务  systemctl restart nginx.service
 重新载入配置文件  nginx -s reload
 查看端口号  netstat -tlnp
+
+Vim编辑器
+查找字符   /字符
