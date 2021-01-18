@@ -108,4 +108,53 @@ public class Book {
 }
 ```
 
-### yaml
+## yaml
+和 properties 一致，只是 yaml 是有序的， properties 配置是无序的。
+
+## resources 资源路径配置
+默认情况下，如果没有指定resources，目前认为自动会将src/main/resources下的.xml文件放到target里头的classes文件夹下的package下的文件夹里。
+
+如果设定了resources，那么默认的就会失效,因此需要设置指定resources文件夹。
+
+利用复制文件的特性，可以复制一些文件到指定的目录。 但是，一定要先指定resources文件目录，再指定要复制的文件
+如下：
+
+* 第一个resource 是复制特定文件
+* 第二个resource 是可以使用pom中的profile替换相关的值
+* 第三个resource 指定resources文件目录(一旦增加了resources节点，默认的resource目录就失效了,需要重新指定)
+
+```
+<build>
+    <resources>
+        <resource>
+            <directory>${project.basedir}/libs</directory>
+            <targetPath>BOOT-INF/lib/</targetPath>
+                <includes>
+                    <include>**/*.jar</include>
+                </includes>
+        </resource>
+        <resource>
+            <directory>src/main/java</directory>
+            <includes>
+                <include>com/changfu/business/tpp/util/templates/**.html</include>
+            </includes>
+            <filter>true</filter>
+        </resource>
+        <resource>
+            <directory>src/main/resources</directory>
+        </resource>
+    </resources>
+</build>
+```
+
+也许有人会有疑问，若只需要过滤context.xml的话，那就只需要配置第一个resource就可以了吧。其实不然，若是只配置第一个resource，第二个不配置，那么当你运行maven打包操作后，你就会发现，在工程的classpath下只有context.xml文件了，其他配置文件都没有打过来。所以第二个resource是必不可少的，指明其他配置文件是不需要过滤的，但是同样需要打包到classpath下。
+
+其实filtering为true的时候，这时只会把过滤的文件打到classpath下，filtering为false的时候，会把不需要过滤的文件打到classpath下。
+
+还有一点需要说明，若`<filtering>`、`<include>`和`<exclude>`都不配置，就是把directory下的所有配置文件都放到classpath下，若这时如下配置
+
+## 自动配置
+@ConditionalOnClass(App.class) 表示当前项目当前 classpath 下存在App时，后面的配置才生效
+
+### 条件注解
+容器启动时，会执行注解了 `@Configuration` 的类，在 FoodConfig 类中注解了 `@Conditional` ， 会去执行 `@Conditional` 中声明的判断类的判断方法，判断成功返回相应的 Bean。
