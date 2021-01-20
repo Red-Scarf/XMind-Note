@@ -190,7 +190,12 @@ public class LocalErrorViewResolver extends DefaultErrorViewResolver {
     }
     @Override
     public ModelAndView resolveErrorView(HttpServletRequest request, HttpStatus status, Map<String, Object> model) {
+        // aaa/123 实际指 classpath:/aaa/123.html
         return new ModelAndView("/aaa/123", model);
     }
 }
 ```
+> 想要自定义模型数据，重写一个model，将参数中的的model拷贝过去（因为这个参数model是UnmodifiableMap类型，不可编辑）
+
+## CORS 跨域问题
+因为同源策略，协议、域名、端口要相同，传统JSONP只支持get请求，现在普遍使用CORS实现跨域。
