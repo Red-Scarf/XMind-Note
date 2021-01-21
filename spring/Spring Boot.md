@@ -225,3 +225,22 @@ public class WebMVCConfig implements WebMvcConfigurer {
     }
 }
 ```
+
+## 服务启动的自动任务
+```java
+@Component
+@Order(100)
+public class LocalCommandLineRunner1 implements CommandLineRunner {
+    @Override
+    public void run(String... args) throws Exception {
+        // TODO
+    }
+}
+```
+将首先需要将类在容器中注册，类必须实现 `CommandLineRunner` 接口，`@order` 注解表示优先级，数字越小优先级越大。run方法的参数来自于项目启动的参数，即入口类mian方法的参数会传到这里。
+
+## 定时任务
+* 使用 `@Scheduled` 注解
+* 第三方框架 Quartz
+
+使用 Schedule 注解需要配置类包括 `@EnableScheduling` 注解，开启定时任务。
