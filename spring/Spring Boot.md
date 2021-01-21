@@ -199,3 +199,29 @@ public class LocalErrorViewResolver extends DefaultErrorViewResolver {
 
 ## CORS 跨域问题
 因为同源策略，协议、域名、端口要相同，传统JSONP只支持get请求，现在普遍使用CORS实现跨域。
+
+使用 `@CrossOrigin` 注解就能设置某一接口接受某域名的跨域，get post都一样。
+```java
+@RestController
+public class HelloController {
+    @CrossOrigin("http://localhost:9091")
+    @PostMapping("/hello")
+    public String hello2() {
+        return "post hello";
+    }
+}
+```
+
+也可以通过配置类进行全局配置
+```java
+@Configuration
+public class WebMVCConfig implements WebMvcConfigurer {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+            .allowedOrigins("http://localhost:9091")
+            .allowedMethods("*")
+            .allowedHeaders("*");
+    }
+}
+```
