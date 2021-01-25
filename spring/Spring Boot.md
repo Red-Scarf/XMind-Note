@@ -274,3 +274,8 @@ public class LocalTimingTask {
 也需要开启任务注解 `@EnableScheduling`
 
 有两个关键概念：jobDetail(要做的事情)，触发器(什么时候做)
+
+定义Job有两种方法，一种直接声明一个Bean就行，另一种需要继承`QuartzJobBean`类，然后实现默认方法。
+
+## 整合swagger
+因为spring boot 没有直接配置swagger，所以需要手动配置依赖，并且要指定版本。
