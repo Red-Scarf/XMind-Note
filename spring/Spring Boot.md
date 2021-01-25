@@ -279,3 +279,27 @@ public class LocalTimingTask {
 
 ## 整合swagger
 因为spring boot 没有直接配置swagger，所以需要手动配置依赖，并且要指定版本。
+
+```java
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+    @Bean
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+            .pathMapping("/")
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("com.bootdemo"))
+            .paths(PathSelectors.any())
+            .build().apiInfo(new ApiInfoBuilder()
+                .title("Swagger 自动文档")
+                .description("详细信息...")
+                .version("9.0")
+                .contact(new Contact("你好你好", "www.baidu.com", "aaa@aaa.com"))
+                .license("The Apache License")
+                .licenseUrl("http://www.bootdemo.com")
+                .build()
+            );
+    }
+}
+```
