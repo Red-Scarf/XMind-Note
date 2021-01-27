@@ -329,3 +329,29 @@ public class User {
         .antMatchers("/swagger-resources/**");
 }
 ```
+
+## 整合 JDBC
+首先，需要引入相应依赖
+
+```xml
+<dependency>
+    <groupId>com.alibaba</groupId>
+    <artifactId>druid-spring-boot-starter</artifactId>
+    <version>1.1.10</version>
+</dependency>
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.21</version>
+    <scope>runtime</scope>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-jdbc</artifactId>
+</dependency>
+```
+其中数据库连接依赖版本需要和实际数据库的依赖版本一致。
+
+使用时，先定义一个实体Bea，然后针对该Bean定义一个Service，用Autowired引入JdbcTemplate实例。
+
+JdbcTemplate 中，除了查询有几个API外，增删改统一用 update 操作。
