@@ -355,3 +355,28 @@ public class User {
 使用时，先定义一个实体Bea，然后针对该Bean定义一个Service，用Autowired引入JdbcTemplate实例。
 
 JdbcTemplate 中，除了查询有几个API外，增删改统一用 update 操作。
+
+## 整合Mybatis
+引入依赖与 JdbcTemplate 一致，只是需要将`spring-boot-starter-jdbc`换成`mybatis-spring-boot-starter`。
+```xml
+<dependency>
+    <groupId>org.mybatis.spring.boot</groupId>
+    <artifactId>mybatis-spring-boot-starter</artifactId>
+    <version>2.1.3</version>
+</dependency>
+```
+
+用法和 JdbcTemplate 一样，需要的 properties 配置也一致，配置好直接写相应的 Mapper 接口。
+```java
+public interface UserMapper {
+    @Select("select * from user;")
+    List<User> getAllUsers();
+    @Results({
+            @Result(property = "id", column = "id"),
+            @Result(property = "username", column = "u"),
+            @Result(property = "address", column = "a")
+    })
+    @Select("select id, username as u, address as a from user where id=#{id};")
+    User getUserById(Long id);
+}
+```
