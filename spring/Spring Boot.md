@@ -357,6 +357,7 @@ public class User {
 JdbcTemplate 中，除了查询有几个API外，增删改统一用 update 操作。
 
 ## 整合Mybatis
+### 引入依赖
 引入依赖与 JdbcTemplate 一致，只是需要将`spring-boot-starter-jdbc`换成`mybatis-spring-boot-starter`。
 ```xml
 <dependency>
@@ -366,6 +367,7 @@ JdbcTemplate 中，除了查询有几个API外，增删改统一用 update 操�
 </dependency>
 ```
 
+### 配置 Mapper
 用法和 JdbcTemplate 一样，需要的 properties 配置也一致，配置好直接写相应的 Mapper 接口。
 ```java
 public interface UserMapper {
@@ -379,4 +381,52 @@ public interface UserMapper {
     @Select("select id, username as u, address as a from user where id=#{id};")
     User getUserById(Long id);
 }
+```
+
+尽管注解比较方便，但还是 xml 文件的 Mapper 更加的灵活，功能更加的全面。
+
+### 配置扫描 Mapper 文件
+注解可以写在启动类上也可以写在配置类上。
+
+### 使用 xml 文件配置
+xml 文件首先要指定好作用域
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bootdemo.dao.StudentMapper">
+    <select id="getAllStudent" resultType="com.bootdemo.dao.Student">
+        select * from student;
+    </select>
+    <insert id="addStudent" parameterType="com.bootdemo.dao.Student">
+        insert into student(name, address) values(#{name}, #{address});
+    </insert>
+    <update id="updateStudentById" parameterType="com.bootdemo.dao.Student">
+        update student set name=#{name}, address=#{address} where id=#{id};
+    </update>
+    <delete id="deleteStudentById">
+        delete from student where id=#{id};
+    </delete>
+</mapper>
+```
+这个 mapper 文件可以放在 interface 同一个文件夹下，这样不需要额外配置就能被扫描到，但 Maven打包时会被忽略，需要额外配置 Maven。
+```xml
+<build>
+    <resources>
+        <resource>
+            <directory>src/main/java</directory>
+            <includes>
+                <include>**/*.xml</include>
+            </includes>
+        </resource>
+        <resource>
+            <directory>src/main/resources</directory>
+        </resource>
+    </resources>
+</build>
+```
+或者直接放在 resources 目录下，Maven 打包的时候无需额外的配置就会自动打包，但必须要放和 interface 同一样的目录层级下，这样 xml 文件和 interface 打包后又会在一起。这样放置，没打包的时候需要去 properties 配置 mapper 的路径，让 MyBatis 能扫描到。
+```properties
+mybatis.mapper-locations=classpath:mapper/*.xml
 ```
