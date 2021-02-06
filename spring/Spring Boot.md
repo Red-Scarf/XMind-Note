@@ -446,3 +446,10 @@ Repository 只有最基本的功能, 还有几个子接口拓展了一些功能:
 * JpaRepository: 继承 PagingAndSortingRepository, 实现了一组 JPA 规范的方法。
 * 自定义 XxxRepository 需要继承 JpaRepository, 才能具备通用的数据访问能力。
 * JpaSpecificationExecutor: 不属于 Repository 体系, 实现一组 JPA Criteria 查询相关的方法。
+
+### SpringBoot 整合 Hibernate
+使用 `Entity` 注解时, 标记该对象为实体类, 项目启动时会针对该类生成一张表, 表名默认为类名, 属性 name 可以自定义表名。
+
+`Id` 注解表示字段为表的id, `GeneratedValue` 表示该主键的自增策略。
+
+对于实体类中的其他属性, 默认会根据属性名在表中生成相应的字段, 字段名与属性名一致, 可以使用 `Column` 注解配置字段的名称、长度、是否为空等属性。
