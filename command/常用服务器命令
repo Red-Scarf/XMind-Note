@@ -29,7 +29,8 @@ redis
 启动
 redis-server
 redis-server.exe redis.windows.conf
-redis-cli -h 127.0.0.1 -p 6379
+打开redis客户端命令
+redis-cli -h 127.0.0.1 -p 端口号
 进去之后要登录
 auth 密码
 获取密码
