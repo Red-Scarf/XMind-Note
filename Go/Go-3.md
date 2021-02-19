@@ -56,10 +56,46 @@ fmt.Printf("指向指针的指针变量 **pptr = %d\n", **pptr) // 3000
 var ppptr ***int
 ```
 
-## 函数指针变量
+## 函数指针参数
+```go
+swap(&a, &b);
+func swap(x *int, y *int) {
+   var temp int
+   temp = *x    /* 保存 x 地址的值 */
+   *x = *y      /* 将 y 赋值给 x */
+   *y = temp    /* 将 temp 赋值给 y */
+}
+```
 
 # 结构体
-# 切片
+结构体是由一系列具有相同类型或不同类型的数据构成的数据集合。
+* 定义
+```go
+type struct_variable_type struct {
+    member definition
+    member definition
+    ...
+    member definition
+}
+```
+* 声明
+```go
+variable_name := structure_variable_type {value1, value2...valuen}
+或
+variable_name := structure_variable_type { key1: value1, key2: value2..., keyn: valuen}
+// 忽略的字段为0或者空
+```
+* 使用结构体用`.`即可
+```go
+结构体.成员名
+```
+* 结构体可以作为参数传递
+* 结构体声明时，首字母大写则其他包可以调用，否则只能本包内调用。首字母大写时，编译会提示需要注释。
+
+## 结构体指针
+使用指针时，如果需要使用指针访问结构体成员，不能使用`*`，直接`指针变量.成员名`
+
+
 # 范围
 # Map
 # 递归
