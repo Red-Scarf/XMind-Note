@@ -95,8 +95,6 @@ variable_name := structure_variable_type { key1: value1, key2: value2..., keyn: 
 ## 结构体指针
 使用指针时，如果需要使用指针访问结构体成员，不能使用`*`，直接`指针变量.成员名`
 
-
-# 范围
 # Map
 # 递归
 # 类型转换
