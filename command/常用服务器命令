@@ -14,6 +14,8 @@ net stop mysql
 登录
 mysql -uroot -p
 查看服务注册
+查看mysql版本
+mysql --version
 sc query mysql
 删除服务
 sc delete mysql
