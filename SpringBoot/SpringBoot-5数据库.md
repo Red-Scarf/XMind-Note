@@ -121,3 +121,31 @@ Repository 只有最基本的功能, 还有几个子接口拓展了一些功能:
 `Id` 注解表示字段为表的id, `GeneratedValue` 表示该主键的自增策略。
 
 对于实体类中的其他属性, 默认会根据属性名在表中生成相应的字段, 字段名与属性名一致, 可以使用 `Column` 注解配置字段的名称、长度、是否为空等属性。
+
+# 整合 Redis
+一般直接使用 Spring Data Redis 或者 Spring Cache，较少直接使用 Jedis 。
+
+依赖
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-redis</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-pool2</artifactId>
+</dependency>
+```
+
+配置文件
+```properties
+spring.redis.database=0
+spring.redis.password=密码
+spring.redis.port=1024
+spring.redis.host=地址
+spring.redis.lettuce.pool.min-idle=5
+spring.redis.lettuce.pool.max-idle=10
+spring.redis.lettuce.pool.max-active=8
+spring.redis.lettuce.pool.max-wait=1ms
+spring.redis.lettuce.shutdown-timeout=100ms
+```
