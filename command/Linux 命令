@@ -57,3 +57,15 @@ chmod -R 777 my/  改变文件夹及子目录下所有文件（夹）权限
 chown qq /home/qq  (把home目录下的qq目录的拥有者改为qq用户)
 chown qq:aa /home/qq  (把home目录下的qq目录的拥有者改为qq用户，用户组改为aa)
 chgrp qq /home/qq  (把home目录下的qq目录的所属组改为qq组)
+
+CentOS 设置默认开启模式（命令行/图形界面）
+/etc/inittab 文件记录显示的模式
+muiti-user.target 表示命令行显示
+graphical.target 表示图形界面显示
+systemctl get-default 可以查看当前的默认显示状态
+systemctl set-default 可以设置默认的显示状态
+
+获取主机信息
+nmcli conn show -a
+根据展示的信息中的name字段查看网络详情
+nmcli conn show 网络名称
