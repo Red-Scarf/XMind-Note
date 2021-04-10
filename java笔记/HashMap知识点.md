@@ -68,6 +68,13 @@ static int indexFor(int h, int length) {//jdk1.7的源码，jdk1.8没有这个�
 
 ![](img/8e8203c1b51be6446cda4026eaaccf19_r.jpg)
 
+> HashMap 判断key是否想等，关键代码
+```java
+if (e.hash == hash && ((k = e.key) == key || (key != null && key.equals(k)))) {
+    ...
+}
+```
+
 #### 3.2 put
 
 ![](img/58e67eae921e4b431782c07444af824e_r.jpg)
